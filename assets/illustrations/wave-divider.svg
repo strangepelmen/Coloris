@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0 40C120 10 240 70 360 40C480 10 600 70 720 40C840 10 960 70 1080 40C1140 25 1170 35 1200 40V80H0V40Z"
+        fill="currentColor" opacity="0.04"/>
+  <path d="M0 45C160 20 320 70 480 45C640 20 800 70 960 45C1040 33 1120 40 1200 45V80H0V45Z"
+        fill="currentColor" opacity="0.03"/>
+  <path d="M0 50C200 30 400 65 600 50C800 35 1000 65 1200 50V80H0V50Z"
+        fill="currentColor" opacity="0.02"/>
+</svg>

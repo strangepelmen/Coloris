@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Coloris — Redirecting</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #F9F7F5;
+      color: #3E2B1E;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #5D4432;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #7A6B5D;
+      margin-bottom: 2rem;
+    }
+    a {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: #5D4432;
+      color: #F9F7F5;
+      text-decoration: none;
+      border-radius: 9999px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    a:hover {
+      background: #8B7355;
+      transform: translateY(-2px);
+    }
+  </style>
+  <script>
+    (function () {
+      try {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          var dest = redirect.replace(window.location.origin, '');
+          if (dest && dest !== window.location.pathname) {
+            window.location.href = dest;
+            return;
+          }
+        }
+      } catch (e) {}
+      var meta = document.createElement('meta');
+      meta.httpEquiv = 'refresh';
+      meta.content = '0;URL=/';
+      document.head.appendChild(meta);
+    })();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">Coloris</div>
+    <p>This page moved or doesn't exist.</p>
+    <a href="/">Go to Coloris</a>
+  </div>
+</body>
+</html>

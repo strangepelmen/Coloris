@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" class="hero-blob-svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="blob2Grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C4A882" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#C4A882" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#blob2Grad)"
+        d="M300 30C400 25 520 100 550 200C580 300 560 420 500 500C440 580 340 570 240 560C140 550 30 480 25 360C20 240 200 35 300 30Z"/>
+</svg>

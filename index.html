@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Coloris — Upload a photo, extract its color palette, and discover royalty-free stock images that match those hues. Build beautiful collages. All in the browser.">
+  <meta name="keywords" content="color,palette,extraction,stock photos,collage,design,visual search,coloris">
+  <meta name="author" content="Coloris">
+  <meta name="theme-color" content="#5D4432">
+
+  <meta property="og:title" content="Coloris — Visual Search Engine by Dominant Color">
+  <meta property="og:description" content="Upload a photo, extract its dominant color palette, discover matching royalty-free images, and build beautiful collages.">
+  <meta property="og:url" content="https://yourusername.github.io/coloris/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://yourusername.github.io/coloris/assets/demo/og-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Coloris — Visual Search Engine">
+  <meta name="twitter:description" content="Discover images by their soul. Upload, extract palette, find matching stock photos.">
+  <meta name="twitter:image" content="https://yourusername.github.io/coloris/assets/demo/og-image.png">
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Coloris","description":"Visual search engine that extracts dominant colors from uploaded images and discovers matching royalty-free photos.","url":"https://yourusername.github.io/coloris/","applicationCategory":"Multimedia","operatingSystem":"Web","browserRequirements":"Requires JavaScript. Works in modern browsers.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@200;300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="css/main.css" as="style">
+  <link rel="preload" href="css/animations.css" as="style">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M14 18H8C6 18 6 20 6 22V26C6 28 8 28 8 28H14V18Z' fill='%235D4432'/%3E%3Cpath d='M14 18L16 10H36L38 18V34C38 36 36 38 34 38H18C16 38 14 36 14 34V18Z' fill='%235D4432'/%3E%3Cpath d='M34 22H38C40 22 42 24 42 26C42 28 40 30 38 30H34V22Z' fill='%235D4432'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%235D4432'/%3E%3Ctext x='90' y='130' text-anchor='middle' font-size='100' font-family='system-ui' fill='%23F9F7F5'%3EC%3C/text%3E%3C/svg%3E">
+
+  <title>Coloris — Visual Search Engine</title>
+</head>
+<body>
+
+  <a href="#uploadZone" class="skip-link">Skip to main content</a>
+
+  <div class="section-progress" id="sectionProgress" aria-hidden="true"></div>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav id="navbar" role="navigation" aria-label="Main">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="Coloris home">
+        <span class="logo-mark">C</span>
+        <span class="logo-text">oloris</span>
+      </a>
+      <div class="nav-actions">
+        <button id="themeToggle" class="nav-btn" aria-label="Toggle dark mode" type="button">
+          <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="moonIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="hidden"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <a href="https://github.com/strangepelmen/coloris" class="nav-btn" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-orb"></div>
+      <div class="hero-grain"></div>
+    </div>
+    <div class="hero-body">
+      <span class="hero-tag">Visual Search Engine</span>
+      <h1 class="hero-headline">
+        <span class="line">Discover images</span>
+        <span class="line">by their <span class="hl">soul</span></span>
+      </h1>
+      <p class="hero-lead">Upload a photograph. We extract its dominant color palette and find royalty‑free imagery that matches those hues. Create beautiful collages from what you discover.</p>
+      <div class="upload-zone" id="uploadZone" role="button" tabindex="0" aria-label="Upload image">
+        <div class="upload-placeholder" id="uploadPlaceholder">
+          <img src="assets/illustrations/coffee-cup.svg" alt="" class="upload-icon" width="56" height="56">
+          <p class="upload-prompt">Drop your image here</p>
+          <span class="upload-hint">JPG, PNG, WebP &middot; 10MB max</span>
+        </div>
+        <div class="upload-preview" id="uploadPreview">
+          <img id="previewImage" alt="">
+          <div class="upload-overlay" id="extractionOverlay">
+            <div class="scan-line"></div>
+            <span class="overlay-label">Extracting palette&hellip;</span>
+          </div>
+        </div>
+        <div class="file-error" id="fileError"></div>
+      </div>
+      <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden aria-label="Choose image file">
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-xl" id="startBtn" type="button">
+          Start exploring
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn btn-ghost btn-xl" id="demoBtn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Try demo
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PALETTE ====== -->
+  <section id="palette-section" class="section section-hidden" aria-label="Color palette">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Palette</span>
+        <h2>Your dominant colors</h2>
+      </header>
+      <div class="swatches" id="swatchesContainer" role="list"></div>
+      <div class="palette-actions">
+        <button class="btn btn-primary btn-md" id="exportPaletteBtn" disabled type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export PNG
+        </button>
+        <button class="btn btn-ghost btn-md" id="copyCssBtn" disabled type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy CSS
+        </button>
+        <button class="btn btn-ghost btn-md" id="copyJsonBtn" disabled type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Copy JSON
+        </button>
+        <button class="btn btn-ghost btn-md" id="surpriseBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Surprise
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== GALLERY ====== -->
+  <section id="results-section" class="section section-hidden" aria-label="Search results">
+    <div class="container">
+      <header class="section-head">
+        <div class="section-head-row">
+          <span class="section-tag">Discover</span>
+          <span class="results-badge" id="resultsCount"></span>
+        </div>
+        <h2>Matching imagery</h2>
+      </header>
+      <div class="layout-picker" role="radiogroup" aria-label="Layout">
+        <button class="layout-opt active" data-layout="grid-2x2" role="radio" aria-checked="true" type="button">2×2</button>
+        <button class="layout-opt" data-layout="grid-3x2" role="radio" aria-checked="false" type="button">3×2</button>
+        <button class="layout-opt" data-layout="grid-4x2" role="radio" aria-checked="false" type="button">4×2</button>
+        <button class="layout-opt" data-layout="polaroid" role="radio" aria-checked="false" type="button">Polaroid</button>
+      </div>
+      <div class="results-grid" id="resultsGrid" role="list"></div>
+      <div class="results-empty hidden" id="resultsEmpty">
+        <img src="assets/illustrations/empty-state.svg" alt="" width="140" height="105">
+        <p>No images found for this palette</p>
+        <span class="text-muted">Try uploading a different image</span>
+      </div>
+      <div class="results-error hidden" id="resultsError">
+        <p>Something went wrong while searching</p>
+        <button class="btn btn-secondary btn-md" id="retryBtn" type="button">Try again</button>
+      </div>
+      <div class="load-more-wrap hidden" id="loadMore">
+        <button class="btn btn-ghost btn-lg" id="loadMoreBtn" type="button">Load more</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== COLLAGE DRAWER (right side) ====== -->
+  <aside class="collage-overlay hidden" id="collageOverlay" aria-label="Collage builder">
+    <div class="collage-drawer" id="collageTray">
+      <div class="drawer-top">
+        <span class="tray-count" id="trayCount">0 / 12</span>
+        <button class="drawer-close" id="collageCloseBtn" aria-label="Close collage drawer" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="tray-items" id="trayItems" role="list"></div>
+      <div class="collapse-preview hidden" id="collagePreview">
+        <canvas id="collageCanvas"></canvas>
+      </div>
+      <div class="drawer-actions">
+        <button class="btn btn-primary btn-sm" id="exportCollageBtn" disabled type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export PNG
+        </button>
+        <button class="btn btn-ghost btn-sm" id="exportHtmlBtn" type="button">Export HTML</button>
+        <button class="btn btn-ghost btn-sm" id="collageClearBtn" type="button">Clear</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ====== HOW IT WORKS ====== -->
+  <section id="how-section" class="section" data-reveal="fade-up" aria-label="How it works">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Process</span>
+        <h2>How it works</h2>
+      </header>
+      <div class="steps-grid">
+        <div class="step-card" data-reveal="fade-up" data-reveal-delay="100">
+          <div class="step-num">01</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h3>Upload</h3>
+          <p>Drop any photograph. We accept JPG, PNG, and WebP up to 10MB.</p>
+        </div>
+        <div class="step-card" data-reveal="fade-up" data-reveal-delay="200">
+          <div class="step-num">02</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/></svg>
+          </div>
+          <h3>Extract</h3>
+          <p>Our MMCQ algorithm analyzes pixels to find 5 dominant colors with perceptual accuracy.</p>
+        </div>
+        <div class="step-card" data-reveal="fade-up" data-reveal-delay="300">
+          <div class="step-num">03</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2v-5"/><path d="M17 3h4v4"/><path d="M21 3L11 13"/></svg>
+          </div>
+          <h3>Discover</h3>
+          <p>CIEDE2000 color matching finds royalty-free images that match every palette color.</p>
+        </div>
+        <div class="step-card" data-reveal="fade-up" data-reveal-delay="400">
+          <div class="step-num">04</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Create</h3>
+          <p>Build beautiful collages with up to 12 images and export as high-resolution PNG.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== ARCHITECTURE FLOW ====== -->
+  <section class="section section-alt" data-reveal="fade-up" aria-label="Architecture">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Pipeline</span>
+        <h2>How the engine works</h2>
+      </header>
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h3>Upload</h3>
+          <p>Image is loaded onto a hidden canvas at full resolution for pixel‑accurate analysis.</p>
+          <span class="flow-tech">Canvas API</span>
+        </div>
+        <div class="flow-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/></svg>
+          </div>
+          <h3>Quantize</h3>
+          <p>MMCQ algorithm bins every pixel into 32&sup3; color cubes, then finds the 5 most populous clusters.</p>
+          <span class="flow-tech">MMCQ &middot; O(n)</span>
+        </div>
+        <div class="flow-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2v-5"/><path d="M17 3h4v4"/><path d="M21 3L11 13"/></svg>
+          </div>
+          <h3>Match</h3>
+          <p>Each palette color is converted to CIE&nbsp;L*a*b* and compared against 202 database images using CIEDE2000.</p>
+          <span class="flow-tech">CIEDE2000 &Delta;E</span>
+        </div>
+        <div class="flow-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Export</h3>
+          <p>Build collages, download palette PNGs, or copy as CSS/JSON/Tailwind — all rendered on a canvas.</p>
+          <span class="flow-tech">Canvas &middot; Clipboard API</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STATS BAR ====== -->
+  <section class="section" data-reveal="fade-up" aria-label="Stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" data-count="2400">0</span>
+          <span class="stat-label">colors extracted</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" data-count="1200">0</span>
+          <span class="stat-label">images matched</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" data-count="11">0</span>
+          <span class="stat-label">color families</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">in browser</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== WHY COLORIS ====== -->
+  <section id="why-section" class="section" data-reveal="fade-up" aria-label="Why Coloris">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Advantages</span>
+        <h2>Why Coloris</h2>
+      </header>
+      <div class="features-grid">
+        <div class="feature-card" data-reveal="fade-up" data-reveal-delay="100">
+          <div class="feature-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>Perceptual Accuracy</h3>
+          <p>CIEDE2000 is the industry standard for color difference. Matches look right to the human eye — not just hex proximity.</p>
+        </div>
+        <div class="feature-card" data-reveal="fade-up" data-reveal-delay="200">
+          <div class="feature-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <h3>No API Keys</h3>
+          <p>200+ curated images are built in. Everything runs in your browser — no signup, no rate limits, no backend.</p>
+        </div>
+        <div class="feature-card" data-reveal="fade-up" data-reveal-delay="300">
+          <div class="feature-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>All In Browser</h3>
+          <p>Color extraction, image search, collage building, and palette export — all on the client side. Zero server costs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== USE CASES ====== -->
+  <section class="section section-alt" data-reveal="fade-up" aria-label="Use cases">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Applications</span>
+        <h2>Who it&rsquo;s for</h2>
+      </header>
+      <div class="usecases-grid">
+        <div class="usecase-card" data-reveal="fade-up" data-reveal-delay="100">
+          <div class="usecase-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>Brand Designers</h3>
+          <p>Extract color palettes from brand mood boards, then find stock imagery that matches the exact brand identity.</p>
+        </div>
+        <div class="usecase-card" data-reveal="fade-up" data-reveal-delay="200">
+          <div class="usecase-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <h3>Photographers</h3>
+          <p>Upload a landscape or portrait and instantly discover the exact hex values of every dominant hue in the frame.</p>
+        </div>
+        <div class="usecase-card" data-reveal="fade-up" data-reveal-delay="300">
+          <div class="usecase-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>UI Designers</h3>
+          <p>Extract palettes from design inspiration images, export them as CSS variables or Tailwind config, and use them immediately.</p>
+        </div>
+        <div class="usecase-card" data-reveal="fade-up" data-reveal-delay="400">
+          <div class="usecase-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
+          </div>
+          <h3>Artists</h3>
+          <p>Analyze the color composition of reference photos, generate harmonious palettes, and build visual catalogues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== USAGE TIPS ====== -->
+  <section class="section" data-reveal="fade-up" aria-label="Usage tips">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Tips</span>
+        <h2>Ways to use Coloris</h2>
+      </header>
+      <div class="tips-grid">
+        <div class="tip-card" data-reveal="fade-up" data-reveal-delay="100">
+          <div class="tip-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <h3>Match any photo</h3>
+          <p>Upload travel shots, product photos, or artwork. The palette reveals the true colors of your image.</p>
+        </div>
+        <div class="tip-card" data-reveal="fade-up" data-reveal-delay="200">
+          <div class="tip-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Build mood boards</h3>
+          <p>Select matching images, arrange them in a collage, and export a ready-to-use mood board for your next project.</p>
+        </div>
+        <div class="tip-card" data-reveal="fade-up" data-reveal-delay="300">
+          <div class="tip-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>Export for design systems</h3>
+          <p>Copy palettes as CSS variables, JSON, or Tailwind config. Use them directly in your design projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FAQ ====== -->
+  <section class="section section-alt" data-reveal="fade-up" aria-label="FAQ">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Questions</span>
+        <h2>Frequently asked</h2>
+      </header>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>How does color extraction work?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">The app loads your image onto a hidden HTML canvas, reads every pixel's RGB value, then uses the Modified Median Cut Quantization (MMCQ) algorithm to find the most representative colors. Each pixel is binned into a 32&times;32&times;32 color cube, and the most populous cubes are averaged to produce the final palette.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>Do I need an API key?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">No. The app includes a built-in database of 202 curated royalty-free images with exact hex tags. Everything runs in your browser — no API calls, no signup, no rate limits. If you want to use the Unsplash or Pexels APIs, you can add your own key in the config file.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>What image formats are supported?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">JPG, PNG, WebP, GIF, BMP, and TIFF. Maximum file size is 10MB. For best results, use photos with 2&ndash;5 distinct colors and good lighting. Highly textured or gradient-heavy images may produce less defined palettes.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>Is my data private?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">Your uploaded image never leaves your browser. All processing happens client-side using the Canvas API and JavaScript. No data is sent to any server. You can disconnect from the internet after the page loads and the app still works.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== TECH SPECS ====== -->
+  <section id="tech-section" class="section" data-reveal="fade-up" aria-label="Technology">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Stack</span>
+        <h2>Built with</h2>
+      </header>
+      <div class="tech-cluster">
+        <span class="tech-badge">MMCQ Quantization</span>
+        <span class="tech-badge">CIEDE2000 &Delta;E</span>
+        <span class="tech-badge">202 Curated Images</span>
+        <span class="tech-badge">11 Color Families</span>
+        <span class="tech-badge">Canvas API</span>
+        <span class="tech-badge">GSAP Animations</span>
+        <span class="tech-badge">Lenis Smooth Scroll</span>
+        <span class="tech-badge">CSS Custom Properties</span>
+        <span class="tech-badge">View Transitions API</span>
+        <span class="tech-badge">100% Static Hosting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== OPEN SOURCE ====== -->
+  <section class="section section-alt" data-reveal="fade-up" aria-label="Open source">
+    <div class="container">
+      <header class="section-head">
+        <span class="section-tag">Repository</span>
+        <h2>Open source</h2>
+      </header>
+      <div class="oss-card">
+        <div class="oss-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </div>
+        <h3 class="oss-title">Coloris is free and open source</h3>
+        <p class="oss-desc">Built with vanilla JavaScript, HTML5 Canvas, and CSS custom properties. No frameworks, no build tools, no dependencies. Clone the repo, open <code>index.html</code>, and it works.</p>
+        <div class="oss-links">
+          <a href="https://github.com/strangepelmen/coloris" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+          <a href="https://github.com/strangepelmen/coloris/stargazers" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Star on GitHub
+          </a>
+        </div>
+        <div class="oss-badges">
+          <span class="oss-badge">MIT License</span>
+          <span class="oss-badge">Vanilla JS</span>
+          <span class="oss-badge">No build step</span>
+          <span class="oss-badge">GitHub Pages</span>
+          <span class="oss-badge">&lt; 500 KB</span>
+          <span class="oss-badge">Accessible</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <span class="footer-brand">Coloris</span>
+        <p class="footer-tagline">Built with care</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/strangepelmen/coloris" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-dot">&middot;</span>
+        <a href="https://unsplash.com" target="_blank" rel="noopener">Photos by Unsplash</a>
+        <span class="footer-dot">&middot;</span>
+        <a href="#" target="_blank">Cafe Design System</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toastContainer" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="customCursor" class="cursor-hidden" aria-hidden="true"></div>
+
+  <script src="config.example.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
