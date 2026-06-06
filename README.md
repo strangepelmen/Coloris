@@ -1,6 +1,6 @@
 # Coloris — Visual Search Engine by Dominant Color
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://strangepelmen.github.io/coloris/)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://strangepelmen.github.io/Coloris/)
 [![GitHub](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 > **Discover images by their soul.** Upload a photo, extract its dominant color palette, and instantly find royalty-free stock photos that match those hues. Build beautiful collages from what you discover.
