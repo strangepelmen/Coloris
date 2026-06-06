@@ -35,26 +35,7 @@
 | Collage export | HTML Canvas API + html2canvas |
 | Hosting | GitHub Pages |
 
----
 
-## Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/strangepelmen/coloris.git
-cd coloris
-
-# Serve locally (no build step required)
-npx serve ./coloris
-# or
-python -m http.server 8080 -d coloris
-```
-
-Open `http://localhost:8080` in your browser.
-
-No API keys required — the built-in image database works offline.
-
----
 
 ## Project Structure
 
@@ -84,18 +65,6 @@ coloris/                        # All website files
 ├── config.example.js           # API key template
 └── .gitignore
 ```
-
----
-
-## Deploy to GitHub Pages
-
-1. Push the repository to GitHub
-2. Go to **Settings → Pages**
-3. Source: **Deploy from a branch**
-4. Branch: `main` → Folder: `/coloris`
-5. Save — your site will be live at `https://strangepelmen.github.io/coloris/`
-
-The app runs 100% in the browser with zero server-side code.
 
 ---
 
